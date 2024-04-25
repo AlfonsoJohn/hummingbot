@@ -38,7 +38,7 @@ def _populate_lookups():
     global INVERSE_MARKET_LOOKUP
     global NAME_LOOKUP
     try:
-        markets = requests.get('https://trade.blocktane.io/api/v2/xt/public/markets').json()
+        markets = requests.get('https://trade.blocktane.io/api/v2/xt/public/markets', timeout=60).json()
         MARKET_DATA = {market['id']: market for market in markets}
         INVERSE_MARKET_LOOKUP = {(market['base_unit'].upper(), market['quote_unit'].upper()): market for market in markets}
         NAME_LOOKUP = {market['name']: market for market in markets}
