@@ -1,4 +1,3 @@
-import random
 import string
 import time
 from typing import Optional, Tuple
@@ -6,6 +5,7 @@ from hummingbot.core.utils.tracking_nonce import get_tracking_nonce
 
 from hummingbot.client.config.config_var import ConfigVar
 from hummingbot.client.config.config_methods import using_exchange
+import secrets
 
 
 CENTRALIZED = True
@@ -48,7 +48,7 @@ def get_ms_timestamp() -> int:
 
 
 def uuid32():
-    return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(32))
+    return ''.join(secrets.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(32))
 
 
 def derive_order_id(user_uid: str, cl_order_id: str, ts: int) -> str:

@@ -1,6 +1,5 @@
 import aiohttp
 import asyncio
-import random
 
 from typing import (
     Any,
@@ -15,11 +14,12 @@ from hummingbot.connector.exchange.altmarkets.altmarkets_constants import Consta
 from hummingbot.connector.exchange.altmarkets.altmarkets_utils import AltmarketsAPIError
 from hummingbot.core.api_throttler.async_throttler import AsyncThrottler
 from hummingbot.logger import HummingbotLogger
+import secrets
 
 
 def retry_sleep_time(try_count: int) -> float:
-    random.seed()
-    randSleep = 1 + float(random.randint(1, 10) / 100)
+    secrets.SystemRandom().seed()
+    randSleep = 1 + float(secrets.SystemRandom().randint(1, 10) / 100)
     return float(2 + float(randSleep * (1 + (try_count ** try_count))))
 
 
