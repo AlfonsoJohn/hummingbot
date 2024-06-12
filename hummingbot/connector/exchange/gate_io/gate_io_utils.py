@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import random
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Tuple
 
@@ -15,6 +14,7 @@ from hummingbot.core.web_assistant.connections.data_types import (
 from hummingbot.core.web_assistant.rest_assistant import RESTAssistant
 from hummingbot.core.api_throttler.async_throttler import AsyncThrottler
 from hummingbot.core.utils.tracking_nonce import get_tracking_nonce
+import secrets
 
 CENTRALIZED = True
 
@@ -90,8 +90,8 @@ def get_new_client_order_id(is_buy: bool, trading_pair: str) -> str:
 
 
 def retry_sleep_time(try_count: int) -> float:
-    random.seed()
-    randSleep = 1 + float(random.randint(1, 10) / 100)
+    secrets.SystemRandom().seed()
+    randSleep = 1 + float(secrets.SystemRandom().randint(1, 10) / 100)
     return float(2 + float(randSleep * (1 + (try_count ** try_count))))
 
 

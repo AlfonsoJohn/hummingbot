@@ -1,6 +1,5 @@
 import aiohttp
 import asyncio
-import random
 import re
 from dateutil.parser import parse as dateparse
 from typing import (
@@ -14,6 +13,7 @@ from hummingbot.core.utils.tracking_nonce import get_tracking_nonce
 from hummingbot.client.config.config_var import ConfigVar
 from hummingbot.client.config.config_methods import using_exchange
 from .hitbtc_constants import Constants
+import secrets
 
 
 TRADING_PAIR_SPLITTER = re.compile(Constants.TRADING_PAIR_SPLITTER)
@@ -83,8 +83,8 @@ def get_new_client_order_id(is_buy: bool, trading_pair: str) -> str:
 
 
 def retry_sleep_time(try_count: int) -> float:
-    random.seed()
-    randSleep = 1 + float(random.randint(1, 10) / 100)
+    secrets.SystemRandom().seed()
+    randSleep = 1 + float(secrets.SystemRandom().randint(1, 10) / 100)
     return float(2 + float(randSleep * (1 + (try_count ** try_count))))
 
 

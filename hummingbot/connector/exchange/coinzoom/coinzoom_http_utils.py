@@ -1,6 +1,5 @@
 import aiohttp
 import asyncio
-import random
 
 from typing import (
     Any,
@@ -13,11 +12,12 @@ import ujson
 from hummingbot.connector.exchange.coinzoom.coinzoom_constants import Constants
 from hummingbot.connector.exchange.coinzoom.coinzoom_utils import CoinzoomAPIError
 from hummingbot.core.api_throttler.async_throttler import AsyncThrottler
+import secrets
 
 
 def retry_sleep_time(try_count: int) -> float:
-    random.seed()
-    randSleep = 1 + float(random.randint(1, 10) / 100)
+    secrets.SystemRandom().seed()
+    randSleep = 1 + float(secrets.SystemRandom().randint(1, 10) / 100)
     return float(2 + float(randSleep * (1 + (try_count ** try_count))))
 
 

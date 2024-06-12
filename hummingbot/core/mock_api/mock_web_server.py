@@ -3,12 +3,12 @@
 import asyncio
 from aiohttp import web
 import logging
-import random
 from typing import Optional
 from yarl import URL
 from collections import namedtuple
 import requests
 from threading import Thread
+import secrets
 
 StockResponse = namedtuple("StockResponse", "method host path params is_json response")
 
@@ -52,7 +52,7 @@ class MockWebServer:
     reroute_local(url)
     reroute_request(self, method, url, **kwargs)
     """
-    TEST_RESPONSE = f"hello {str(random.randint(0, 10000000))}"
+    TEST_RESPONSE = f"hello {str(secrets.SystemRandom().randint(0, 10000000))}"
     _hosts_to_mock = {}
     host = "127.0.0.1"
     _port: Optional[int] = None
