@@ -25,6 +25,7 @@ from hummingbot.client.ui import login_prompt
 from hummingbot.core.event.events import HummingbotUIEvent
 from hummingbot.core.management.console import start_management_console
 from hummingbot.core.utils.async_utils import safe_gather
+from security import safe_command
 
 
 class CmdlineParser(argparse.ArgumentParser):
@@ -51,7 +52,7 @@ class CmdlineParser(argparse.ArgumentParser):
 
 def autofix_permissions(user_group_spec: str):
     project_home: str = os.path.realpath(os.path.join(__file__, "../../"))
-    subprocess.run(f"cd '{project_home}' && "
+    safe_command.run(subprocess.run, f"cd '{project_home}' && "
                    f"sudo chown -R {user_group_spec} conf/ data/ logs/", capture_output=True, shell=True)
 
 
